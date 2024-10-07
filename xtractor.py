@@ -22,8 +22,10 @@ class Xtractor:
         
     def run_extractor(self, *drop_first_row: bool) -> None:
         """
-        Main process method. Optionally takes a bool to 
-        drop the first row or not
+        Runs the extractor. 
+        
+        Args:
+            *drop_first_row (bool) : Optionally drop the first row of the dataframe
         """
         with pdfplumber.open(self.pdf_path) as pdf:
             pages = pdf.pages
@@ -43,12 +45,19 @@ class Xtractor:
         """_summary_
 
         Args:
-            path (str): _description_
+            path (str): desired output path for the cleaned .csv
         """
         self.output = path
 
-    def validate_path(self,path: str):
+    def validate_path(self,path: str) -> bool:
+        """_summary_
 
+        Args:
+            path (str): path whose existence you want to confirm
+
+        Returns:
+           bool: if the pathe exists, True is returned. Otherwise the function returns False.
+        """
         return os.path.exists(path)
     
     def drop_first_row(self, df:pd.DataFrame) -> pd.DataFrame:
@@ -56,10 +65,10 @@ class Xtractor:
         Utility class to drop the first row of a DataFrame
 
         Args:
-            df (pd.DataFrame): _description_
+            df (pd.DataFrame):the dataframe whose first row you want to drop
 
         Returns:
-            pd.DataFrame: _description_
+            pd.DataFrame
         """
         return df.drop([0])
         
